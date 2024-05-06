@@ -1,0 +1,42 @@
+El enfoque de Divide and Conquer consiste en dividir el problema general en subproblemas más pequeños, resolverlos estos subproblemas recursivamente y luego combinar las soluciones de todos los subproblemas para obtener una solución al problema general.\\
+
+Para resolver el problema de la distancia de edición (\textit{Edit Distance}) utilizando Divide and Conquer, podemos seguir estos pasos:
+
+\subsubsection*{Dividir}
+Podemos dividir las cadenas de entrada en dos mitades seleccionando un índice pivote. Esto nos permite dividir el problema en subproblemas más pequeños. Continuaremos dividiendo hasta que lleguemos a caracteres individuales o cadenas vacías.\\
+
+Por ejemplo, si tenemos las cadenas \quotes{ABCD} y \quotes{ACD}, podemos elegir el índice pivote como el índice medio, lo que resulta en las subcadenas \quotes{ABC} y \quotes{ACD}.
+
+\subsubsection*{Conquistar}
+Una vez que hemos dividido las cadenas, encontramos recursivamente la distancia de edición entre cada par de subcadenas. Esto implica resolver el problema de la distancia de edición para entradas más pequeñas hasta que lleguemos al caso base.\\
+
+Para encontrar la distancia de edición entre dos subcadenas, consideramos tres posibles operaciones:
+
+\begin{itemize}
+    \item Si los caracteres en las posiciones actuales coinciden, avanzamos a las siguientes posiciones sin realizar operaciones adicionales.
+    \item Si los caracteres en las posiciones actuales no coinciden, tenemos tres opciones: inserción, eliminación o sustitución. Realizamos cada operación y calculamos la distancia de edición para las subcadenas resultantes.
+    \item Elegimos la operación que produzca la mínima distancia de edición y continuamos recursivamente hasta que lleguemos al caso base.
+\end{itemize}
+
+\subsubsection*{Combinar}
+Después de resolver los subproblemas y obtener la distancia de edición para cada par de subcadenas, fusionamos los resultados para obtener la distancia de edición final para las cadenas originales. Combinamos las distancias de edición de las subcadenas según las operaciones realizadas.
+
+\subsubsection*{Pseudocódigo}
+\begin{minted}{python}
+Edit Distance Divide And Conquer(x, y):
+    Si longitud(x) = 0:
+        Devolver length(y)
+    Fin Si
+    Si longitud(y) = 0:
+        Devolver length(x)
+    Fin Si
+    Si x[0] = y[0]:
+        Devolver Edit Distance Divide And Conquer(x[1:], y[1:])
+    Fin Si
+    Devolver 1 + min(
+        Edit Distance Divide And Conquer(x, y[1:]),
+        Edit Distance Divide And Conquer(x[1:], y),
+        Edit Distance Divide And Conquer(x[1:], y[1:])
+    )
+Fin Algoritmo
+\end{minted}

@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{afterpage}
+\usepackage{fix-cm}
+\usepackage{lipsum}
+\usepackage{sectsty}
+\usepackage[export]{adjustbox}
+\usepackage{tabularx}
+\usepackage[spanish]{babel}
+\usepackage{minted}
+
+
+\definecolor{FSBlue}{HTML}{13284c}
+\definecolor{FSRed}{RGB}{177, 16, 44}
+
+
+\usepackage{newtxmath}
+
+\title{\textbf {Análisis y Diseño de Algoritmos\\Proyecto 2}}
+\author{Samuel A. Chamalé, Alejandro J. Ortega}
+\date{Guatemala, marzo 2024}
+
+\sectionfont{\color{FSRed}}
+\subsectionfont{\color{FSBlue}}
+
+\newcommand{\quotes}[1]{``#1''}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+
+\begin{document}
+\maketitle
+\input{sections/problem}
+\input{sections/algorithms}
+\input{sections/theoretical}
+\input{sections/empirical}
+\input{referencias}
+
+\end{document}

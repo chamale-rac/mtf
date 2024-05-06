@@ -1,0 +1,32 @@
+\section{Problema Elegido}
+
+\subsection{\textit{\textbf{Definición y enunciado del problema}}}
+
+La Distancia de Levenshtein es una métrica ampliamente utilizada a nivel mundial para evaluar la similitud entre secuencias, especialmente en aplicaciones de lingüística computacional.\\
+
+El problema de Levenshtein, también conocido como Edit Distance, consiste en determinar el número mínimo de operaciones de inserción, eliminación y reemplazo necesarias para transformar una secuencia en otra y lograr que sean idénticas. \\
+
+Existen varios tipos de distancias de edición que permiten diferentes tipos de operaciones sobre las secuencias, como Hamming Distance, Jaro Distance o Longest Common Subsequence. Sin embargo, la medida más comúnmente utilizada es la Distancia de Levenshtein, por lo que a menudo se utiliza como sinónimo de distancia de edición.\\
+
+En nuestro caso, nos interesa calcular la Distancia de Edición entre dos cadenas (strings), \(S_{1}\) y \(S_{2}\). Esta distancia se define como el número mínimo de mutaciones necesarias para transformar \(S_{1}\) en \(S_{2}\), donde una mutación puede ser cualquiera de las siguientes operaciones:
+\begin{enumerate}
+    \item Cambiar una letra
+    \item Insertar una letra
+    \item Eliminar una letra
+\end{enumerate}
+
+Consideremos dos cadenas \(S_{1}\) y \(S_{2}\), de tamaño \(m\) y \(n\) respectivamente. Para transformar \(S_{1}\) en \(S_{2}\), procedemos aplicando una secuencia de operaciones que se almacenan en una nueva cadena \(S_{3}\). La transformación se realiza utilizando índices \(i\) y \(j\) para recorrer las cadenas \(S_{1}\) y \(S_{2}\), comenzando con \(i=j=1\). Las operaciones disponibles son las siguientes:
+
+\begin{enumerate}
+    \item Cambiar una letra (Replace): Esta operación consiste en reemplazar un carácter en \(S_{1}\) por un carácter \(c\) específico.  En la cadena resultante \(S_{3}\), se tiene \(S_{3}[j]=c\) y se incrementa tanto \(i\) como \(j\) en \(1\) para avanzar a los siguientes caracteres en \(S_{1}\) y \(S_{2}\).
+    \item Insertar una letra (Insert): Esta operación implica insertar un carácter \(c\) en \(S_{3}\). En \(S_{3}\), se tiene \(S_{3}[j]=c\), incrementando únicamente \(j\) en \(1\) sin modificar \(i\).\
+    \item Eliminar una letra (Delete): Esta operación consiste en ignorar un carácter en \(S_{1}\), incrementando \(i\) en \(1\) sin modificar \(j\).
+\end{enumerate}
+
+Para ilustrar esto con un ejemplo, supongamos que tenemos las cadenas \(S_{1}=\)"casa" y \(S_{2}\)="calma". La distancia de edición mínima entre estas dos cadenas sería 2, ya que podemos transformar \(S_{1}\) en \(S_{2}\) realizando una operación de sustitución para cambiar la "s" por "l" y una operación de inserción para agregar la letra "m".\\
+
+Es importante tener en cuenta que en nuestro enfoque asumimos que los costos de las operaciones de edición son constantes y no funciones. Es razonable asumir que los costos de las operaciones de edición son constantes, es decir, que todas las operaciones tienen el mismo costo unitario. Esta simplificación se justifica por su simplicidad y practicidad en muchos casos de aplicación.\\
+
+Al considerar costos constantes, el problema de la distancia de edición se vuelve más manejable y fácil de implementar, ya que no es necesario asignar valores específicos a cada operación de edición. Además, permite un enfoque más intuitivo al considerar que todas las operaciones tienen la misma importancia y contribuyen igualmente al resultado final.\\
+
+Si bien existen variantes de la distancia de edición que asignan diferentes costos a cada operación, asumir costos constantes es una aproximación válida en muchas situaciones, especialmente cuando se busca una medida general de similitud entre secuencias. Esta simplificación no invalida el concepto de distancia de edición ni su utilidad en la comparación de cadenas, ya que sigue capturando la cantidad mínima de operaciones necesarias para transformar una secuencia en otra, independientemente del valor específico asignado a cada operación.
