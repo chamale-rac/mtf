@@ -4,6 +4,7 @@ import Data.List (delete, elemIndex)
 
 -- Type alias for readability
 type MTFList = [Int]
+type ConfigList = [Int]
 
 -- Function to move an element to the front of the list
 moveToFront :: Int -> MTFList -> MTFList
@@ -19,7 +20,7 @@ access x xs = (newList, cost)
       Nothing -> length xs + 1 -- Cost if element not found
 
 -- Process a sequence of accesses on a configuration list
-processRequests :: MTFList -> [Int] -> (MTFList, [(MTFList, Int, Int)])
+processRequests :: MTFList -> ConfigList -> (MTFList, [(MTFList, Int, Int)])
 processRequests xs requests = foldl process (xs, []) requests
   where
     process (lst, acc) req =
@@ -27,25 +28,24 @@ processRequests xs requests = foldl process (xs, []) requests
        in (newList, acc ++ [(newList, req, cost)])
 
 -- Function to process multiple initial list and request tuples
-processMultipleRequests :: [(MTFList, [Int])] -> IO ()
+processMultipleRequests :: [(String, MTFList, ConfigList)] -> IO ()
 processMultipleRequests = mapM_ processTuple
   where
-    processTuple (initialList, requests) = do
-      let (finalList, results) = processRequests initialList requests
+    processTuple (name, initialList, requests) = do
+      putStrLn $ "Processing " ++ name ++ " with initial list: " ++ show initialList ++ " and requests: " ++ show requests
+      let (_, results) = processRequests initialList requests
       mapM_ printResult results
       let totalCost = sum $ map (\(_, _, cost) -> cost) results
-      putStrLn $ "Total Cost of Accesses: " ++ show totalCost
+      putStrLn $ "Total Cost of Accesses: " ++ show totalCost ++ "\n" ++"----------------------------------------"
     printResult (lst, req, cost) = putStrLn $ "List: " ++ show lst ++ ", Request: " ++ show req ++ ", Cost: " ++ show cost
-    -- Print a divider between each tuple
-    printDivider = putStrLn "----------------------------------------"
 
 -- Main function to run the example
 main :: IO ()
 main = do
-  let tuples = [([0, 1, 2, 3, 4], [40, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]), 
-                ([0, 1, 2, 3, 4], [4, 3, 2, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4]),
-                ([0, 1, 2, 3, 4], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), -- Minimum cost
-                ([0, 1, 2, 3, 4], [4, 3, 2, 1, 0, 4, 3, 2, 1, 0, 4, 3, 2, 1, 0, 4, 3, 2, 1, 0]), -- Maximum cost
-                ([0, 1, 2, 3, 4], [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]),
-                ([0, 1, 2, 3, 4], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3])] 
+  let tuples = [("a", [0, 1, 2, 3, 4], [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]), 
+                ("b", [0, 1, 2, 3, 4], [4, 3, 2, 1, 0, 1, 2, 3, 4, 3, 2, 1, 0, 1, 2, 3, 4]),
+                ("c", [0, 1, 2, 3, 4], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), -- Minimum cost
+                ("d", [0, 1, 2, 3, 4], [4, 3, 2, 1, 0, 4, 3, 2, 1, 0, 4, 3, 2, 1, 0, 4, 3, 2, 1, 0]), -- Maximum cost
+                ("e", [0, 1, 2, 3, 4], [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]),
+                ("f", [0, 1, 2, 3, 4], [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3])] 
   processMultipleRequests tuples
