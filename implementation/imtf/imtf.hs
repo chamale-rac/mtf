@@ -16,8 +16,8 @@ moveToFront x xs = x : delete x xs
 type RequestInfo = (ConfigList, Int)
 
 -- Modified access function to implement IMTF
-accessIMTF :: Int -> MTFList -> RequestInfo -> (MTFList, Int)
-accessIMTF x xs (requests, idx) = (newList, cost)
+access :: Int -> MTFList -> RequestInfo -> (MTFList, Int)
+access x xs (requests, idx) = (newList, cost)
   where
     position = elemIndex x xs
     cost = maybe (length xs + 1) (+ 1) position
@@ -29,7 +29,7 @@ processRequests :: MTFList -> ConfigList -> (MTFList, [(MTFList, Int, Int)])
 processRequests xs requests = foldl process (xs, []) (zip requests [0 ..])
   where
     process (lst, acc) (req, idx) =
-      let (newList, cost) = accessIMTF req lst (requests, idx)
+      let (newList, cost) = access req lst (requests, idx)
        in (newList, acc ++ [(newList, req, cost)])
 
 -- Function to process multiple initial list and request tuples
@@ -49,6 +49,7 @@ main :: IO ()
 main = do
   let tuples =
         [ ("6.1", [0, 1, 2, 3, 4], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), -- Minimum cost (best case)
-          ("6.2", [0, 1, 2, 3, 4], [4, 3, 2, 1, 0, 4, 3, 2, 1, 0, 4, 3, 2, 1, 0, 4, 3, 2, 1, 0]) -- Maximum cost (worst case)
+          ("6.2", [0, 1, 2, 3, 4], [4, 3, 2, 1, 0, 4, 3, 2, 1, 0, 4, 3, 2, 1, 0, 4, 3, 2, 1, 0]), -- Maximum cost (worst case)
+          ("paper1", [1, 2, 3], [3, 2, 1, 3, 2])
         ]
   processMultipleRequests tuples

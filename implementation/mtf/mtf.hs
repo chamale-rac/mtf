@@ -16,9 +16,8 @@ access :: Int -> MTFList -> (MTFList, Int)
 access x xs = (newList, cost)
   where
     newList = moveToFront x xs
-    cost = case elemIndex x xs of
-      Just idx -> idx + 1 -- Convert 0-based index to 1-based position
-      Nothing -> length xs + 1 -- Cost if element not found
+    position = elemIndex x xs
+    cost = maybe (length xs + 1) (+ 1) position -- inherit Just and Nothing from Maybe
 
 -- Process a sequence of accesses on a configuration list
 processRequests :: MTFList -> RequestList -> (MTFList, [(MTFList, Int, Int)])
