@@ -9,7 +9,9 @@ type RequestList = [Int]
 
 -- Function to move an element to the front of the list
 moveToFront :: Int -> MTFList -> MTFList
-moveToFront x xs = x : delete x xs
+moveToFront x xs
+    | x `elem` xs = x : delete x xs
+    | otherwise   = xs
 
 -- Access an element, updating the list and calculating the cost
 access :: Int -> MTFList -> (MTFList, Int)

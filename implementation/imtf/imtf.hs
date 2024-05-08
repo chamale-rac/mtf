@@ -10,7 +10,9 @@ type ConfigList = [Int]
 
 -- Function to move an element to the front of the list
 moveToFront :: Int -> MTFList -> MTFList
-moveToFront x xs = x : delete x xs
+moveToFront x xs
+    | x `elem` xs = x : delete x xs
+    | otherwise   = xs
 
 -- Type for storing the request list and its index
 type RequestInfo = (ConfigList, Int)
